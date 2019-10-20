@@ -1,5 +1,11 @@
 import Euterpea
 import Data.List
+
+
+reverse' :: [a] -> [a]  
+reverse' [] = []  
+reverse' (x:xs) = reverse' xs ++ [x]  
+
 -- Notes --
 
 -- 3rd Octave --
@@ -147,7 +153,37 @@ playNotes5 = (instrument OrchestralHarp(oct5))
 
 allNotes = play $(playNotes3 :+: playNotes4 :+: playNotes5)
 
--- TODO build a keyboard --
+-- Build a keyboard --
+
+piano = [c3, cs3, d3, ds3, e3, f3, fs3, g3, gs3, a3, as3, b3, c4, cs4, d4, ds4, e4, f4, fs4, g4, gs4, a4, as4, b4, c5, cs5, d5, ds5, e5, f5, fs5, g5, gs5, a5, as5, b5, c6, cs6, d6, ds6, e6, f6, fs6, g6, gs6, a6, as6, b6]
+
+playPiano = play $(instrument OrchestralHarp(line(piano))) 
+
+playPianoReverse = play $(instrument OrchestralHarp(line(reverse'(piano)))) 
+
+-- Use recursion to rebuild paino to our desired key and build chords from root note--
+-- root wholeStep, ws, halfStep, ws, ws, ws, hs(root)
+-- [0, 2, 4, 5, 7, 9, 11, 12 ]
+
+cMajorScale = [c3, d3, e3, f3, g3, a3, b3, c4]
+
+playMajorScale scale = play $(instrument OrchestralHarp(line(scale) :+: line(reverse'(scale)))) 
+
+filter' :: (a -> Bool) -> [a] -> [a]  
+filter' _ [] = []  
+filter' p (x:xs)   
+    | p x       = x : filter' p xs  
+    | otherwise = filter' p xs  
+
+
+
+
+
+majorThis key = filter' (==key) piano
+
+
+playMajorChord majorScale = play $(instrument OrchestralHarp(line(majorScale))) 
+
 
 
 -- Chords -- 
@@ -156,6 +192,7 @@ allNotes = play $(playNotes3 :+: playNotes4 :+: playNotes5)
 -- root, thrid, fifth --
 
 cMaj = [c4, e4, g4]
+cMaj5 = [c4, c5, e5, g5]
 
 csMaj = [cs4, es4, gs4]
 
@@ -178,6 +215,7 @@ aMaj = [a4, cs5, e5]
 bfMaj = [bf4, d5, f5]
 
 bMaj = [b4, ds5, fs5]
+
 
 -- Minor --
 
@@ -288,13 +326,24 @@ play12Chords chordName1 chordName2 chordName3 chordName4 chordName5 chordName6 c
 
 
 -- Chord progressions --
+
+-- Major --
 -- I - IV - V --
+-- I - vi - IV - V --
+-- ii - V - I --
 
-cMajChords = [cMaj, fMaj, gMaj]
+cMajProg = [cMaj, fMaj, gMaj]
 
-dfMajChords = [csMaj, fsMaj, afMaj]
+csMajProg = [csMaj, fsMaj, afMaj]
 
 dMajChords = []
+
+-- Minor --
+-- i - VI - VII --
+-- i - iv - VII --
+-- i - iv - v --
+-- i - VI - III - VII--
+-- ii - v - i --
 
 -- I - V - vi - IV --
 -- pop --
@@ -303,25 +352,30 @@ cMajPop = [cMaj, gMaj, aMin, fMaj]
 -- I - V - vi - iii - IV - I - IV - V --
 -- canon --
 
+cMajCanon = [cMaj, gMaj, aMin, eMin, fMaj, cMaj, fMaj, gMaj]
+
+csMajCanon = [csMaj, afMaj, bfMin, fMin, fsMaj, csMaj, fsMaj, afMaj]
+
 
 -- ii - V - i --
 -- Jazz --
 cMajJazz = [dMin, gMaj, cMaj]
 
-reverse' :: [a] -> [a]  
-reverse' [] = []  
-reverse' (x:xs) = reverse' xs ++ [x]  
-
-
 playProgression chordProg = play $(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2)))
 
+playProgression4 chordProg = play $(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) ))
+
+playCanon chordProg = play $ (tempo(1/4)(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) :+: chord(chordProg!!4):+: chord(chordProg!!5):+: chord(chordProg!!6):+: chord(chordProg!!7))))
+
+-- saveCanon chordProg = (tempo(1/4)(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) :+: chord(chordProg!!4):+: chord(chordProg!!5):+: chord(chordProg!!6):+: chord(chordProg!!7))))
 
 playSong1 chordProg = 
     let 
         lProg = length(chordProg) 
+        saveCanon lProg = (tempo(1/4)(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) :+: chord(chordProg!!4):+: chord(chordProg!!5):+: chord(chordProg!!6):+: chord(chordProg!!7))))
     in
         if lProg == 3
-            then play $(instrument OrchestralHarp(
+            then play $ forever(instrument OrchestralHarp(
                 line(chordProg!!0) :+: 
                 chord(chordProg!!0) :+: 
                 line(chordProg!!1) :+: 
@@ -330,15 +384,35 @@ playSong1 chordProg =
                 chord(chordProg!!2) :+: 
                 line(reverse'(chordProg!!0)) :+: 
                 chord(chordProg!!0)))
-        if chordProg == cMajJazz
-            then play $(instrument OrchestralHarp(
-                line(reverse'(chordProg!!0)) :+: 
-                chord(chordProg!!0) :+:
+        else if lProg == 4
+            then play $ forever(instrument OrchestralHarp(
+                line(chordProg!!0) :+: 
+                chord(chordProg!!0) :+: 
                 line(chordProg!!1) :+: 
                 chord(chordProg!!1) :+: 
                 line(chordProg!!2) :+: 
                 chord(chordProg!!2) :+: 
+                line(chordProg!!3) :+: 
+                chord(chordProg!!3)))
+        else if lProg == 8
+            then play $ (saveCanon (lProg)) :+: forever(instrument OrchestralHarp(
                 line(chordProg!!0) :+: 
-                chord(chordProg!!0)))
+                chord(chordProg!!0) :+: 
+                line(chordProg!!1) :+: 
+                chord(chordProg!!1) :+: 
+                line(chordProg!!2) :+: 
+                chord(chordProg!!2) :+: 
+                line(chordProg!!3) :+: 
+                chord(chordProg!!3) :+:
+                line(chordProg!!4) :+: 
+                chord(chordProg!!4) :+:
+                line(chordProg!!5) :+: 
+                chord(chordProg!!5) :+:
+                line(chordProg!!6) :+: 
+                chord(chordProg!!6) :+:
+                line(chordProg!!7) :+: 
+                chord(chordProg!!7)
+                ))
         else
             putStrLn("Pick another song")
+

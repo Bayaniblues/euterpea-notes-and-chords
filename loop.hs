@@ -24,18 +24,21 @@ repeatN n action =
 chordProg = cMaj
 
 
-playSong chordProg = 
+export chordProg = 
     let 
         lProg = length(chordProg) 
     in  
         repeatN lProg (
             play $(instrument OrchestralHarp(line(chordProg!!0)))
+        )
+
                 -- (line(chordProg!!repeatN) :+: 
                 -- chord(chordProg!!repeatN))
 
             --(:+: line( chordProg!!repeatN)
             -- :+: chord(chordProg!!repeatN)))
-        )
+
+
 
         --play $(instrument OrchestralHarp(buildSong))
     
