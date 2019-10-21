@@ -21,9 +21,31 @@ repeatN n action =
         action
         repeatN (n-1) action
 
+makeScale :: [a] -> [a]
+makeScale [] = []
+makeScale (x:xs) = 
+    let 
+        state = []
+        lengthPiano = length(piano)
+    in 
+        repeatN lengthPiano(
+            if state == 0
+            x ++ [xs]
+            else if state == 1
+                putStrLn("hello")
+            else if state == 2
+                putStrLn("mello")
+            else if state == 3
+                putStrLn("hello")
+            else if state == 4
+                putStrLn("hello")
+            else if state == 5
+                putStrLn("hello")
+            else if state == 6
+)
+
+
 chordProg = cMaj
-
-
 export chordProg = 
     let 
         lProg = length(chordProg) 

@@ -1,5 +1,5 @@
 import Euterpea
-import Data.List
+import Euterpea.IO.MIDI.ToMidi2
 
 
 reverse' :: [a] -> [a]  
@@ -161,30 +161,11 @@ playPiano = play $(instrument OrchestralHarp(line(piano)))
 
 playPianoReverse = play $(instrument OrchestralHarp(line(reverse'(piano)))) 
 
--- Use recursion to rebuild paino to our desired key and build chords from root note--
--- root wholeStep, ws, halfStep, ws, ws, ws, hs(root)
--- [0, 2, 4, 5, 7, 9, 11, 12 ]
-
 cMajorScale = [c3, d3, e3, f3, g3, a3, b3, c4]
 
 playMajorScale scale = play $(instrument OrchestralHarp(line(scale) :+: line(reverse'(scale)))) 
 
-filter' :: (a -> Bool) -> [a] -> [a]  
-filter' _ [] = []  
-filter' p (x:xs)   
-    | p x       = x : filter' p xs  
-    | otherwise = filter' p xs  
-
-
-
-
-
-majorThis key = filter' (==key) piano
-
-
 playMajorChord majorScale = play $(instrument OrchestralHarp(line(majorScale))) 
-
-
 
 -- Chords -- 
 
@@ -192,11 +173,14 @@ playMajorChord majorScale = play $(instrument OrchestralHarp(line(majorScale)))
 -- root, thrid, fifth --
 
 cMaj = [c4, e4, g4]
-cMaj5 = [c4, c5, e5, g5]
 
 csMaj = [cs4, es4, gs4]
 
+dfMaj = [df4, f4, af4]
+
 dMaj = [d4, fs4, a4]
+
+dsMaj = [ds4, gf4, a4]
 
 efMaj = [ef4, g4, bf4]
 
@@ -206,11 +190,17 @@ fMaj = [f4, a4, c5]
 
 fsMaj = [fs4, as4, cs5]
 
+gfMaj = [gf4, bf4, df5]
+
 gMaj = [g4, b4, d5]
+
+gsMaj = [gs4, bs4, ds5]
 
 afMaj = [af4, c5, ef5]
 
 aMaj = [a4, cs5, e5]
+
+asMaj = [as4, d5, es5]
 
 bfMaj = [bf4, d5, f5]
 
@@ -301,15 +291,51 @@ cDom7 = [c4, e4, g4, bf4]
 
 csDom7 = [cs4, es4, gs4, b4]
 
-dDom7 = []
+dfDom7 = []
 
 -- TODO:
 -- Minor 7th --
+
+cMin7 = [c3, ef3, g3, bf3]
+
+csMin7 = [cs3, e3, gs3, b3]
+
+dfMin7 = [df3, ff3, af3, cf4]
+
+dMin7 = [d4, f4, a4, c4]
+
+dsMin7 = [ds4, fs4, as4, cs4]
+
+efMin7 = [ef4, gf4, bf4, df4]
+
+eMin7 = [e4, g4, b4, d4]
+
+fMin7 = [f4, af4, c5, ef5]
+
+fsMin7 = [fs4, a4, cs5, e5]
+
+gfMin7 = [gf4, a4, df5, ff5]
+
+gMin7 = [gf4, bf4, d5, f5]
+
+gsMin7 = [gs4, b5, ds5, fs5]
+
+afMin7 = [af5, cf6, ef6, gf6]
+
+aMin7 = [a5, cf6, e6, g6]
+
+asMin7 = [as5, cs6, es6, gs6]
+
+bfMin7 = [bf5, df6, f6, af6]
+
+bMin7 = [b5, d6, fs6, a6]
+
 
 -- TODO:
 -- Minor 7th flat five --
 
 playChord chordName = play $(instrument OrchestralHarp(chord(chordName)))
+
 
 -- shell scripts for testing --
 
@@ -323,20 +349,54 @@ playChord chordName = play $(instrument OrchestralHarp(chord(chordName)))
 
 play12Chords chordName1 chordName2 chordName3 chordName4 chordName5 chordName6 chordName7 chordName8 chordName9 chordName10 chordName11 chordName12= 
     play $(instrument OrchestralHarp(chord(chordName1) :+: chord(chordName2) :+: chord(chordName3) :+: chord(chordName4) :+: chord(chordName5) :+: chord(chordName6) :+: chord(chordName7) :+: chord(chordName8) :+: chord(chordName9) :+: chord(chordName10) :+: chord(chordName11) :+: chord(chordName12)))
+ 
+-- play17Chords cMin7 csMin7 dfMin7 dMin7 dsMin7 efMin7 eMin7 fMin7 fsMin7 gfMin7 gMin7 gsMin7 afMin7 aMin7 asMin7 bfMin7 bMin7
 
+-- play17Chords cMaj csMaj dfMaj dMaj dsMaj efMaj eMaj fMaj fsMaj gfMaj gMaj gsMaj afMaj aMaj asMaj bfMaj bMaj
+
+play17Chords chordName1 chordName2 chordName3 chordName4 chordName5 chordName6 chordName7 chordName8 chordName9 chordName10 chordName11 chordName12 chordName13 chordName14 chordName15 chordName16 chordName17= 
+    play $(instrument OrchestralHarp(chord(chordName1) :+: chord(chordName2) :+: chord(chordName3) :+: chord(chordName4) :+: chord(chordName5) :+: chord(chordName6) :+: chord(chordName7) :+: chord(chordName8) :+: chord(chordName9) :+: chord(chordName10) :+: chord(chordName11) :+: chord(chordName12) :+: chord(chordName13) :+: chord(chordName14) :+: chord(chordName15) :+: chord(chordName16) :+: chord(chordName17)))
 
 -- Chord progressions --
 
 -- Major --
 -- I - IV - V --
--- I - vi - IV - V --
+
 -- ii - V - I --
 
+-- I - IV - V --
 cMajProg = [cMaj, fMaj, gMaj]
 
-csMajProg = [csMaj, fsMaj, afMaj]
+-- I - vi - IV - V --
+cMajProg2 = [cMaj, aMin, fMaj, gMaj]
 
-dMajChords = []
+-- I - IV - V --
+dfMajProg = [csMaj, fsMaj, afMaj]
+-- I - IV - V --
+dMajProg = [dMaj, gMaj, aMaj]
+-- I - vi - IV - V --
+efMajProg = [efMaj, cMin, csMaj, bfMaj]
+-- I - vi - IV - V --
+eMajProg = [eMaj, csMin, aMaj, bMaj]
+
+fMajProg = []
+
+fsMajProg = []
+
+gMajProg = []
+
+afMajProg = []
+
+aMajProg = []
+
+bfMajProg = []
+
+bMajProg = []
+
+-- I - vi - IV - V --
+
+
+
 
 -- Minor --
 -- i - VI - VII --
@@ -349,6 +409,11 @@ dMajChords = []
 -- pop --
 cMajPop = [cMaj, gMaj, aMin, fMaj]
 
+-- 50's pop --
+-- I - vi - IV - V --
+cMaj50 = [cMaj, aMin, gMaj, fMaj]
+
+
 -- I - V - vi - iii - IV - I - IV - V --
 -- canon --
 
@@ -356,10 +421,33 @@ cMajCanon = [cMaj, gMaj, aMin, eMin, fMaj, cMaj, fMaj, gMaj]
 
 csMajCanon = [csMaj, afMaj, bfMin, fMin, fsMaj, csMaj, fsMaj, afMaj]
 
+dMajCanon = []
 
--- ii - V - i --
+dsMajCanon = []
+
+eMajCanon = []
+
+fMajCanon = []
+
+gMajCanon = []
+
+afMajCanon = []
+
+aMajCanon = []
+
+bfMajCanon = []
+
+bMajCanon = []
+
+
+
+
 -- Jazz --
+-- ii - V - i --
 cMajJazz = [dMin, gMaj, cMaj]
+
+-- ii - V - I --
+cMajJazz2 = [dMin7, gMaj7, cMaj7]
 
 playProgression chordProg = play $(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2)))
 
@@ -375,7 +463,7 @@ playSong1 chordProg =
         saveCanon lProg = (tempo(1/4)(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) :+: chord(chordProg!!4):+: chord(chordProg!!5):+: chord(chordProg!!6):+: chord(chordProg!!7))))
     in
         if lProg == 3
-            then play $ forever(instrument OrchestralHarp(
+            then play $ (instrument OrchestralHarp(
                 line(chordProg!!0) :+: 
                 chord(chordProg!!0) :+: 
                 line(chordProg!!1) :+: 
@@ -385,7 +473,59 @@ playSong1 chordProg =
                 line(reverse'(chordProg!!0)) :+: 
                 chord(chordProg!!0)))
         else if lProg == 4
-            then play $ forever(instrument OrchestralHarp(
+            then play $ (instrument OrchestralHarp(
+                line(chordProg!!0) :+: 
+                chord(chordProg!!0) :+: 
+                line(chordProg!!1) :+: 
+                chord(chordProg!!1) :+: 
+                line(chordProg!!2) :+: 
+                chord(chordProg!!2) :+: 
+                line(chordProg!!3) :+: 
+                chord(chordProg!!3)))
+        else if lProg == 8
+            then play $ (saveCanon (lProg)) :+: forever(instrument OrchestralHarp(
+                line(chordProg!!0) :+: 
+                chord(chordProg!!0) :+: 
+                line(chordProg!!1) :+: 
+                chord(chordProg!!1) :+: 
+                line(chordProg!!2) :+: 
+                chord(chordProg!!2) :+: 
+                line(chordProg!!3) :+: 
+                chord(chordProg!!3) :+:
+                line(chordProg!!4) :+: 
+                chord(chordProg!!4) :+:
+                line(chordProg!!5) :+: 
+                chord(chordProg!!5) :+:
+                line(chordProg!!6) :+: 
+                chord(chordProg!!6) :+:
+                line(chordProg!!7) :+: 
+                chord(chordProg!!7)
+                ))
+        else
+            putStrLn("Pick another song")
+
+-- Export -- 
+
+export this = writeMidi2 "test1.mid" this
+
+
+exportSong chordProg = 
+    let 
+        lProg = length(chordProg) 
+        saveCanon lProg = (tempo(1/4)(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) :+: chord(chordProg!!4):+: chord(chordProg!!5):+: chord(chordProg!!6):+: chord(chordProg!!7))))
+    in
+        if lProg == 3
+            then writeMidi2 "test1.mid" (instrument OrchestralHarp(
+                line(chordProg!!0) :+: 
+                chord(chordProg!!0) :+: 
+                line(chordProg!!1) :+: 
+                chord(chordProg!!1) :+: 
+                line(chordProg!!2) :+: 
+                chord(chordProg!!2) :+: 
+                line(reverse'(chordProg!!0)) :+: 
+                chord(chordProg!!0)))
+        else if lProg == 4
+            then play $ (instrument OrchestralHarp(
                 line(chordProg!!0) :+: 
                 chord(chordProg!!0) :+: 
                 line(chordProg!!1) :+: 

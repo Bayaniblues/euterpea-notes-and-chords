@@ -1,6 +1,5 @@
 import Euterpea
 import Euterpea.IO.MIDI.ToMidi2
-import SoundNotes
 
 m = instrument (CustomInstrument "Flute A") (c 4 qn :+: d 4 qn) :=:
     instrument (CustomInstrument "Flute B") (c 5 qn) :=:
