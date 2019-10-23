@@ -9,7 +9,7 @@ reverse' (x:xs) = reverse' xs ++ [x]
 -- Notes --
 
 -- 3rd Octave --
-c3 = c 3 qn
+c3 = c 3 wn
 d3 = d 3 qn
 e3 = e 3 qn
 f3 = f 3 qn
@@ -153,8 +153,9 @@ playNotes5 = (instrument OrchestralHarp(oct5))
 
 allNotes = play $(playNotes3 :+: playNotes4 :+: playNotes5)
 
--- Build a keyboard --
+-- Test keyboard --
 
+-- Bowser's staircase lol
 piano = [c3, cs3, d3, ds3, e3, f3, fs3, g3, gs3, a3, as3, b3, c4, cs4, d4, ds4, e4, f4, fs4, g4, gs4, a4, as4, b4, c5, cs5, d5, ds5, e5, f5, fs5, g5, gs5, a5, as5, b5, c6, cs6, d6, ds6, e6, f6, fs6, g6, gs6, a6, as6, b6]
 
 playPiano = play $(instrument OrchestralHarp(line(piano))) 
@@ -506,9 +507,6 @@ playSong1 chordProg =
 
 -- Export -- 
 
-export this = writeMidi2 "test1.mid" this
-
-
 exportSong chordProg = 
     let 
         lProg = length(chordProg) 
@@ -555,4 +553,104 @@ exportSong chordProg =
                 ))
         else
             putStrLn("Pick another song")
+            
+
+allNotesArray = [c3, d3, e3, f3, g3, a3, b3, cf3, df3, ef3, ff3, gf3, af3, bf3, cs3, ds3, es3, fs3, gs3, as3, bs3, a4, b4, c4, d4, e4, f4, g4, cf4, df4, ef4, ff4, gf4, af4, bf4, cs4, ds4, es4, fs4, gs4, as4, bs4, a5, b5, c5, d5, e5, f5, g5, cf5, df5, ef5, ff5, gf5, af5, bf5, cs5, ds5, es5, fs5, gs5, as5, bs5, a6, b6, c6, d6, e6, f6, g6, cf6, df6, ef6, ff6, gf6, af6, bf6, cs6, ds6, es6, fs6, gs6, as6, bs6]
+
+-- Export 2 midi
+-- TODO learn how to use recursions 
+
+-- notes -- 
+
+midi_c3 = writeMidi2 "./output/c3.mid" (instrument OrchestralHarp(c3))
+midi_d3 = writeMidi2 "./output/d3.mid" (instrument OrchestralHarp(d3))
+midi_e3 = writeMidi2 "./output/e3.mid" (instrument OrchestralHarp(e3))
+midi_f3 = writeMidi2 "./output/f3.mid" (instrument OrchestralHarp(f3))
+midi_g3 = writeMidi2 "./output/g3.mid" (instrument OrchestralHarp(g3))
+midi_a3 = writeMidi2 "./output/a3.mid" (instrument OrchestralHarp(a3))
+midi_b3 = writeMidi2 "./output/b3.mid" (instrument OrchestralHarp(b3))
+
+midi_cf3 = writeMidi2 "./output/cf3.mid" (instrument OrchestralHarp(cf3))
+midi_df3 = writeMidi2 "./output/df3.mid" (instrument OrchestralHarp(df3))
+midi_ef3 = writeMidi2 "./output/ef3.mid" (instrument OrchestralHarp(ef3))
+midi_ff3 = writeMidi2 "./output/ff3.mid" (instrument OrchestralHarp(ff3))
+midi_gf3 = writeMidi2 "./output/gf3.mid" (instrument OrchestralHarp(gf3))
+midi_af3 = writeMidi2 "./output/af3.mid" (instrument OrchestralHarp(af3))
+midi_bf3 = writeMidi2 "./output/bf3.mid" (instrument OrchestralHarp(bf3))
+midi_cs3 = writeMidi2 "./output/cs3.mid" (instrument OrchestralHarp(cs3))
+midi_ds3 = writeMidi2 "./output/ds3.mid" (instrument OrchestralHarp(ds3))
+midi_es3 = writeMidi2 "./output/es3.mid" (instrument OrchestralHarp(es3))
+midi_fs3 = writeMidi2 "./output/fs3.mid" (instrument OrchestralHarp(fs3))
+midi_gs3 = writeMidi2 "./output/gs3.mid" (instrument OrchestralHarp(gs3))
+midi_as3 = writeMidi2 "./output/as3.mid" (instrument OrchestralHarp(as3))
+midi_bs3 = writeMidi2 "./output/bs3.mid" (instrument OrchestralHarp(bs3))
+
+midi_a4 = writeMidi2 "./output/a4.mid" (instrument OrchestralHarp(a4))
+midi_b4 = writeMidi2 "./output/b4.mid" (instrument OrchestralHarp(b4))
+midi_c4 = writeMidi2 "./output/c4.mid" (instrument OrchestralHarp(c4))
+midi_d4 = writeMidi2 "./output/d4.mid" (instrument OrchestralHarp(d4))
+midi_e4 = writeMidi2 "./output/e4.mid" (instrument OrchestralHarp(e4))
+midi_f4 = writeMidi2 "./output/f4.mid" (instrument OrchestralHarp(f4))
+midi_g4 = writeMidi2 "./output/g4.mid" (instrument OrchestralHarp(g4))
+
+midi_cf4 = writeMidi2 "./output/cf4.mid" (instrument OrchestralHarp(cf4))
+midi_df4 = writeMidi2 "./output/df4.mid" (instrument OrchestralHarp(df4))
+midi_ef4 = writeMidi2 "./output/ef4.mid" (instrument OrchestralHarp(ef4))
+midi_ff4 = writeMidi2 "./output/ff4.mid" (instrument OrchestralHarp(ff4))
+midi_gf4 = writeMidi2 "./output/gf4.mid" (instrument OrchestralHarp(gf4))
+midi_af4 = writeMidi2 "./output/af4.mid" (instrument OrchestralHarp(af4))
+midi_bf4 = writeMidi2 "./output/bf4.mid" (instrument OrchestralHarp(bf4))
+midi_cs4 = writeMidi2 "./output/cs4.mid" (instrument OrchestralHarp(cs4))
+midi_ds4 = writeMidi2 "./output/ds4.mid" (instrument OrchestralHarp(ds4))
+midi_es4 = writeMidi2 "./output/es4.mid" (instrument OrchestralHarp(es4))
+midi_fs4 = writeMidi2 "./output/fs4.mid" (instrument OrchestralHarp(fs4))
+midi_gs4 = writeMidi2 "./output/gs4.mid" (instrument OrchestralHarp(gs4))
+midi_as4 = writeMidi2 "./output/as4.mid" (instrument OrchestralHarp(as4))
+midi_bs4 = writeMidi2 "./output/bs4.mid" (instrument OrchestralHarp(bs4))
+
+midi_a5 = writeMidi2 "./output/a5.mid" (instrument OrchestralHarp(a5))
+midi_b5 = writeMidi2 "./output/b5.mid" (instrument OrchestralHarp(b5))
+midi_c5 = writeMidi2 "./output/c5.mid" (instrument OrchestralHarp(c5))
+midi_d5 = writeMidi2 "./output/d5.mid" (instrument OrchestralHarp(d5))
+midi_e5 = writeMidi2 "./output/e5.mid" (instrument OrchestralHarp(e5))
+midi_f5 = writeMidi2 "./output/f5.mid" (instrument OrchestralHarp(f5))
+midi_g5 = writeMidi2 "./output/g5.mid" (instrument OrchestralHarp(g5))
+
+midi_cf5 = writeMidi2 "./output/cf5.mid" (instrument OrchestralHarp(cf5))
+midi_df5 = writeMidi2 "./output/df5.mid" (instrument OrchestralHarp(df5))
+midi_ef5 = writeMidi2 "./output/ef5.mid" (instrument OrchestralHarp(ef5))
+midi_ff5 = writeMidi2 "./output/ff5.mid" (instrument OrchestralHarp(ff5))
+midi_gf5 = writeMidi2 "./output/gf5.mid" (instrument OrchestralHarp(gf5))
+midi_af5 = writeMidi2 "./output/af5.mid" (instrument OrchestralHarp(af5))
+midi_bf5 = writeMidi2 "./output/bf5.mid" (instrument OrchestralHarp(bf5))
+midi_cs5 = writeMidi2 "./output/cs5.mid" (instrument OrchestralHarp(cs5))
+midi_ds5 = writeMidi2 "./output/ds5.mid" (instrument OrchestralHarp(ds5))
+midi_es5 = writeMidi2 "./output/es5.mid" (instrument OrchestralHarp(es5))
+midi_fs5 = writeMidi2 "./output/fs5.mid" (instrument OrchestralHarp(fs5))
+midi_gs5 = writeMidi2 "./output/gs5.mid" (instrument OrchestralHarp(gs5))
+midi_as5 = writeMidi2 "./output/as5.mid" (instrument OrchestralHarp(as5))
+midi_bs5 = writeMidi2 "./output/bs5.mid" (instrument OrchestralHarp(bs5))
+
+midi_a6 = writeMidi2 "./output/a6.mid" (instrument OrchestralHarp(a6))
+midi_b6 = writeMidi2 "./output/b6.mid" (instrument OrchestralHarp(b6))
+midi_c6 = writeMidi2 "./output/c6.mid" (instrument OrchestralHarp(c6))
+midi_d6 = writeMidi2 "./output/d6.mid" (instrument OrchestralHarp(d6))
+midi_e6 = writeMidi2 "./output/e6.mid" (instrument OrchestralHarp(e6))
+midi_f6 = writeMidi2 "./output/f6.mid" (instrument OrchestralHarp(f6))
+midi_g6 = writeMidi2 "./output/g6.mid" (instrument OrchestralHarp(g6))
+
+midi_cf6 = writeMidi2 "./output/cf6.mid" (instrument OrchestralHarp(cf6))
+midi_df6 = writeMidi2 "./output/df6.mid" (instrument OrchestralHarp(df6))
+midi_ef6 = writeMidi2 "./output/ef6.mid" (instrument OrchestralHarp(ef6))
+midi_ff6 = writeMidi2 "./output/ff6.mid" (instrument OrchestralHarp(ff6))
+midi_gf6 = writeMidi2 "./output/gf6.mid" (instrument OrchestralHarp(gf6))
+midi_af6 = writeMidi2 "./output/af6.mid" (instrument OrchestralHarp(af6))
+midi_bf6 = writeMidi2 "./output/bf6.mid" (instrument OrchestralHarp(bf6))
+midi_cs6 = writeMidi2 "./output/cs6.mid" (instrument OrchestralHarp(cs6))
+midi_ds6 = writeMidi2 "./output/ds6.mid" (instrument OrchestralHarp(ds6))
+midi_es6 = writeMidi2 "./output/es6.mid" (instrument OrchestralHarp(es6))
+midi_fs6 = writeMidi2 "./output/fs6.mid" (instrument OrchestralHarp(fs6))
+midi_gs6 = writeMidi2 "./output/gs6.mid" (instrument OrchestralHarp(gs6))
+midi_as6 = writeMidi2 "./output/as6.mid" (instrument OrchestralHarp(as6))
+midi_bs6 = writeMidi2 "./output/bs6.mid" (instrument OrchestralHarp(bs6))
 

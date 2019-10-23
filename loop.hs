@@ -73,3 +73,14 @@ export chordProg =
 --    in play $(instrument OrchestralHarp(repeatN (line(chordProg!!repeatN) :+: chord(chordProg!!repeatN) :+:)
         -- line(reverse'(chordProg!!0)) :+: 
         -- chord(chordProg!!0)))
+
+
+
+LoopThis y = 
+    let 
+        lProg = length(y) 
+    in  
+        repeatN lProg (
+            putStrLn("repeat")
+        )
+        

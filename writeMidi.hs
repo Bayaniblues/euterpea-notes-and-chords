@@ -20,3 +20,40 @@ main = writeMidi2 "test.mid" m
 -- Major chord progressions
 -- minor chord progressions
 
+cMaj
+csMaj
+dfMaj
+dMaj
+dsMaj
+efMaj
+eMaj
+fMaj
+fsMaj
+gfMaj
+gMaj
+gsMaj
+afMaj
+aMaj
+asMaj
+bfMaj
+bMaj
+
+cMaj
+csMaj
+dfMaj
+dMaj
+dsMaj
+efMaj
+eMaj
+fMaj
+fsMaj
+gfMaj
+gMaj
+gsMaj
+afMaj
+aMaj
+asMaj
+bfMaj
+bMaj
+
+
