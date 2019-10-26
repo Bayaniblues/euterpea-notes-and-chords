@@ -9,7 +9,7 @@ reverse' (x:xs) = reverse' xs ++ [x]
 -- Notes --
 
 -- 3rd Octave --
-c3 = c 3 wn
+c3 = c 3 qn
 d3 = d 3 qn
 e3 = e 3 qn
 f3 = f 3 qn
@@ -173,126 +173,171 @@ playMajorChord majorScale = play $(instrument OrchestralHarp(line(majorScale)))
 -- Major --
 -- root, thrid, fifth --
 
-cMaj = [c4, e4, g4]
+majorThis root = [root, (Modify (Transpose 4)root), (Modify (Transpose 7)root)]
 
-csMaj = [cs4, es4, gs4]
+cMaj = majorThis c4
 
-dfMaj = [df4, f4, af4]
+csMaj = majorThis cs4
 
-dMaj = [d4, fs4, a4]
+dfMaj = majorThis df4
 
-dsMaj = [ds4, gf4, a4]
+dMaj = majorThis d4
 
-efMaj = [ef4, g4, bf4]
+dsMaj = majorThis ds4
 
-eMaj = [e4, gs4, b4]
+efMaj = majorThis ef4
 
-fMaj = [f4, a4, c5]
+eMaj = majorThis e4
 
-fsMaj = [fs4, as4, cs5]
+fMaj = majorThis f4
 
-gfMaj = [gf4, bf4, df5]
+fsMaj = majorThis fs4
 
-gMaj = [g4, b4, d5]
+gfMaj = majorThis gf4
 
-gsMaj = [gs4, bs4, ds5]
+gMaj = majorThis g4
 
-afMaj = [af4, c5, ef5]
+gsMaj = majorThis gs4
 
-aMaj = [a4, cs5, e5]
+afMaj = majorThis af4
 
-asMaj = [as4, d5, es5]
+aMaj = majorThis a4
 
-bfMaj = [bf4, d5, f5]
+asMaj = majorThis as4
 
-bMaj = [b4, ds5, fs5]
+bfMaj = majorThis bf4
 
+bMaj = majorThis b4
 
 -- Minor --
+-- root, minor thrid, fifth --
 
-cMin = [c4, ef4, g4]
+minorThis mRoot = [mRoot, (Modify (Transpose 3)mRoot), (Modify (Transpose 7)mRoot)]
 
-csMin = [cs4, e4, gs4]
+cMinTest =  minorThis c4
 
-dMin = [d4, f4, a4]
+cMin = minorThis c4
 
-efMin = [ef4, gf4, bf4]
+csMin = minorThis cs4
 
-eMin = [e4, g4, b4]
+dMin = minorThis d4
 
-fMin = [f4, af4, c5]
+efMin = minorThis ef4
 
-fsMin = [fs4, a4, cs5]
+eMin = minorThis e4
 
-gMin = [g4, bf4, d5]
+fMin = minorThis f4
 
-afMin = [af4, cf5, ef5]
+fsMin = minorThis fs4
 
-aMin = [a4, c5, e5]
+gMin = minorThis g4
 
-bfMin = [bf4, df5, f5]
+afMin = minorThis af4
 
-bMin = [b4, d5, fs5]
+aMin = minorThis a4
+
+bfMin = minorThis bf4
+
+bMin = minorThis b4
 
 -- Diminished --
+-- root, dim third, dim fifth --
+diminishThis dRoot = [dRoot, (Modify (Transpose 3)dRoot), (Modify (Transpose 6)dRoot)]
 
-cDim = [c4, ef4, gf4]
+cDimTest = diminishThis c4
 
-csDim = [cs4, e4, g4]
+cDim = diminishThis c4
 
-dDim = [d4, f4, af4]
+csDim = diminishThis cs4
 
-efDim = [ef4, gf4, a4]
+dDim = diminishThis d4
 
-eDim = [e4, g4, bf4]
+efDim = diminishThis ef4
 
-fDim = [f4, af4, b4]
+eDim = diminishThis e4
 
-fsDim = [fs4, a4, c5]
+fDim = diminishThis f4
 
-gDim = [g4, bf4, df5]
+fsDim = diminishThis fs4
 
-afDim = [af4, cf5, d5]
+gDim = diminishThis g4
 
-aDim = [a4, c5, ef5]
+afDim = diminishThis af4
 
-bfDim = [bf4, df5, e5]
+aDim = diminishThis a4
 
-bDim = [b4, d5, f5]
+bfDim = diminishThis bf4
+
+bDim = diminishThis b4
 
 -- Major 7th --
 
-cMaj7 = [c4, e4, g4, b4]
+majorSevenThis sevenRoot = [sevenRoot, (Modify (Transpose 4)sevenRoot), (Modify (Transpose 7)sevenRoot), (Modify (Transpose 11)sevenRoot)]
 
-csMaj7 = [cs4, es4, gs4, bs4]
+cMaj7 = majorSevenThis c4
 
-dMaj7 = [d4, fs4, a4, cs5]
+csMaj7 = majorSevenThis cs4
 
-efMaj7 = [ef4, g4, bf4, d5]
+dMaj7 = majorSevenThis d4
 
-eMaj7 = [e4, gs4, b4, ds5]
+efMaj7 = majorSevenThis ef4
 
-fMaj7 = [f4, a4, c5, e5]
+eMaj7 = majorSevenThis e4
 
-fsMaj7 = [fs4, as4, cs5, es5]
+fMaj7 = majorSevenThis f4
 
-gMaj7 = [g4, b4, d5, fs5]
+fsMaj7 = majorSevenThis fs4
 
-afMaj7 = [af4, c5, ef5, g5]
+gMaj7 = majorSevenThis gs4
 
-aMaj7 = [a4, cs5, e5, gs5]
+afMaj7 = majorSevenThis af4
 
-bfMaj7 = [bf4, d5, f5, a5]
+aMaj7 = majorSevenThis a4
 
-bMaj7 = [b4, ds5, fs5, as5]
+bfMaj7 = majorSevenThis bf4
+
+bMaj7 = majorSevenThis b4
 
 -- Dominant 7th --
+-- root - Major 3rd - Perfect 5th - Minor 7th --
+dom7This domSevenRoot = [domSevenRoot, (Modify (Transpose 4)domSevenRoot), (Modify (Transpose 7)domSevenRoot), (Modify (Transpose 10)domSevenRoot)]
 
-cDom7 = [c4, e4, g4, bf4]
+cDom7Test = dom7This c4
 
-csDom7 = [cs4, es4, gs4, b4]
+cDom7 = dom7This c4
 
-dfDom7 = []
+csDom7 = dom7This cs4
+
+dfDom7  = dom7This df4
+
+dDom7 = dom7This d4
+
+dsDom7  = dom7This ds4
+
+efDom7  = dom7This ef4
+
+eDom7 = dom7This e4
+
+fDom7 = dom7This f4
+
+fsDom7  = dom7This fs4
+
+gfDom7  = dom7This gf4
+
+gDom7 = dom7This g4
+
+gsDom7  = dom7This gs4
+
+afDom7  = dom7This af4
+
+aDom7 = dom7This a4
+
+asDom7  = dom7This as4
+
+bfDom7  = dom7This bf4
+
+bDom7 = dom7This b4
+
 
 -- TODO:
 -- Minor 7th --
@@ -337,6 +382,8 @@ bMin7 = [b5, d6, fs6, a6]
 
 playChord chordName = play $(instrument OrchestralHarp(chord(chordName)))
 
+playLine chordName = play $(instrument OrchestralHarp(line(chordName)))
+
 
 -- shell scripts for testing --
 
@@ -357,6 +404,9 @@ play12Chords chordName1 chordName2 chordName3 chordName4 chordName5 chordName6 c
 
 play17Chords chordName1 chordName2 chordName3 chordName4 chordName5 chordName6 chordName7 chordName8 chordName9 chordName10 chordName11 chordName12 chordName13 chordName14 chordName15 chordName16 chordName17= 
     play $(instrument OrchestralHarp(chord(chordName1) :+: chord(chordName2) :+: chord(chordName3) :+: chord(chordName4) :+: chord(chordName5) :+: chord(chordName6) :+: chord(chordName7) :+: chord(chordName8) :+: chord(chordName9) :+: chord(chordName10) :+: chord(chordName11) :+: chord(chordName12) :+: chord(chordName13) :+: chord(chordName14) :+: chord(chordName15) :+: chord(chordName16) :+: chord(chordName17)))
+ 
+-- play17Chords cDom7 csDom7 dfDom7 dDom7 dsDom7 efDom7 eDom7 fDom7 fsDom7 gfDom7 gDom7 gsDom7 afDom7 aDom7 asDom7 bfDom7 bDom7
+
 
 -- Chord progressions --
 
@@ -380,24 +430,7 @@ efMajProg = [efMaj, cMin, csMaj, bfMaj]
 -- I - vi - IV - V --
 eMajProg = [eMaj, csMin, aMaj, bMaj]
 
-fMajProg = []
-
-fsMajProg = []
-
-gMajProg = []
-
-afMajProg = []
-
-aMajProg = []
-
-bfMajProg = []
-
-bMajProg = []
-
 -- I - vi - IV - V --
-
-
-
 
 -- Minor --
 -- i - VI - VII --
@@ -420,35 +453,18 @@ cMaj50 = [cMaj, aMin, gMaj, fMaj]
 
 cMajCanon = [cMaj, gMaj, aMin, eMin, fMaj, cMaj, fMaj, gMaj]
 
-csMajCanon = [csMaj, afMaj, bfMin, fMin, fsMaj, csMaj, fsMaj, afMaj]
-
-dMajCanon = []
-
-dsMajCanon = []
-
-eMajCanon = []
-
-fMajCanon = []
-
-gMajCanon = []
-
-afMajCanon = []
-
-aMajCanon = []
-
-bfMajCanon = []
-
-bMajCanon = []
-
-
-
-
 -- Jazz --
 -- ii - V - i --
 cMajJazz = [dMin, gMaj, cMaj]
 
 -- ii - V - I --
 cMajJazz2 = [dMin7, gMaj7, cMaj7]
+
+cDimJazz = [dDom7, gDom7, cDom7]
+
+cMajCreate = [dMin7, gDom7, cMaj7, dDom7, gMaj7, cDom7]
+
+-- Create music --
 
 playProgression chordProg = play $(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2)))
 
@@ -458,13 +474,13 @@ playCanon chordProg = play $ (tempo(1/4)(instrument OrchestralHarp(chord(chordPr
 
 -- saveCanon chordProg = (tempo(1/4)(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) :+: chord(chordProg!!4):+: chord(chordProg!!5):+: chord(chordProg!!6):+: chord(chordProg!!7))))
 
-playSong1 chordProg = 
+playSong1 chordProg keyOf = 
     let 
         lProg = length(chordProg) 
         saveCanon lProg = (tempo(1/4)(instrument OrchestralHarp(chord(chordProg!!0) :+: chord(chordProg!!1) :+: chord(chordProg!!2) :+: chord(chordProg!!3) :+: chord(chordProg!!4):+: chord(chordProg!!5):+: chord(chordProg!!6):+: chord(chordProg!!7))))
     in
         if lProg == 3
-            then play $ (instrument OrchestralHarp(
+            then play $ (Modify (Transpose keyOf)(instrument OrchestralHarp(
                 line(chordProg!!0) :+: 
                 chord(chordProg!!0) :+: 
                 line(chordProg!!1) :+: 
@@ -472,9 +488,9 @@ playSong1 chordProg =
                 line(chordProg!!2) :+: 
                 chord(chordProg!!2) :+: 
                 line(reverse'(chordProg!!0)) :+: 
-                chord(chordProg!!0)))
+                chord(chordProg!!0))))
         else if lProg == 4
-            then play $ (instrument OrchestralHarp(
+            then play $ (Modify (Transpose keyOf)(instrument OrchestralHarp(
                 line(chordProg!!0) :+: 
                 chord(chordProg!!0) :+: 
                 line(chordProg!!1) :+: 
@@ -482,9 +498,30 @@ playSong1 chordProg =
                 line(chordProg!!2) :+: 
                 chord(chordProg!!2) :+: 
                 line(chordProg!!3) :+: 
-                chord(chordProg!!3)))
+                chord(chordProg!!3))))
+
+        else if lProg == 6
+            then play $ (Modify (Transpose keyOf)(instrument OrchestralHarp(
+                line(chordProg!!0) :+: 
+                chord(chordProg!!0) :+: 
+                line(chordProg!!1) :+: 
+                chord(chordProg!!1) :+: 
+                line(chordProg!!2) :+: 
+                chord(chordProg!!2) :+:
+                line(reverse'(chordProg!!0)) :+: 
+                chord(chordProg!!0) :+:
+                line(chordProg!!3) :+: 
+                chord(chordProg!!3) :+:
+                line(chordProg!!4) :+: 
+                chord(chordProg!!4) :+:
+                line(chordProg!!5) :+: 
+                chord(chordProg!!5) :+: 
+                line(reverse'(chordProg!!3)) :+: 
+                chord(chordProg!!3))
+                ))
+
         else if lProg == 8
-            then play $ (saveCanon (lProg)) :+: forever(instrument OrchestralHarp(
+            then play $ (saveCanon (lProg)) :+: (instrument OrchestralHarp(
                 line(chordProg!!0) :+: 
                 chord(chordProg!!0) :+: 
                 line(chordProg!!1) :+: 
